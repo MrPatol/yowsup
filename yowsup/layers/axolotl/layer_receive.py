@@ -211,7 +211,7 @@ class AxolotlReceivelayer(AxolotlBaseLayer):
             self.handleDocumentMessage(node, m.document_message)
         elif m.HasField("video_message"):
             logger.debug("Handle video message")
-            self.handleDocumentMessage(node, m.video_message)
+            self.handleVideoMessage(node, m.video_message)
         elif m.HasField("audio_message"):
             logger.debug("Handle audio message")
             self.handleAudioMessage(node, m.audio_message)
