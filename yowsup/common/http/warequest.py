@@ -15,6 +15,9 @@ if sys.version_info < (3, 0):
 else:
     from http import client as httplib
     from urllib.parse import urlencode
+    if sys.version_info > (3, 3):
+        import ssl
+        ssl._create_default_https_context = ssl._create_unverified_context
 
 logger = logging.getLogger(__name__)
 

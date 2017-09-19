@@ -173,8 +173,8 @@ class AxolotlReceivelayer(AxolotlBaseLayer):
             print("DUMP:")
             print(serializedData)
             print([s for s in serializedData])
-            print([ord(s) for s in serializedData])
-            raise
+            # print([ord(s) for s in serializedData])
+            raise ValueError("Error message")
         if not m or not serializedData:
             raise ValueError("Empty message")
 
@@ -200,8 +200,18 @@ class AxolotlReceivelayer(AxolotlBaseLayer):
             self.handleImageMessage(node, m.image_message)
 
         if not handled:
-            print(m)
-            raise ValueError("Unhandled")
+             handled = True
+             self.handleUnhandledMessage(node)
+        #    print("%s %s" %(node,m.ListFields()))
+        #    print(m)
+        #    raise ValueError("Unhandled %s" % (m.SerializeToString()))
+
+    def handleUnhandledMessage(self, originalEncNode):
+        messageNode = copy.deepcopy(originalEncNode)
+        messageNode.children = []
+        messageNode["type"] = "text"
+        messageNode.addChild(ProtocolTreeNode("body", data = "__unhandled__"))
+        self.toUpper(messageNode)
 
     def handleSenderKeyDistributionMessage(self, senderKeyDistributionMessage, axolotlAddress):
         groupId = senderKeyDistributionMessage.groupId
@@ -230,7 +240,8 @@ class AxolotlReceivelayer(AxolotlBaseLayer):
             "caption": imageMessage.caption,
             "encoding": "raw",
             "file": "enc",
-            "ip": "0"
+            "ip": "0",
+            "mediakey": imageMessage.media_key
         }, data = imageMessage.jpeg_thumbnail)
         messageNode.addChild(mediaNode)
 
