@@ -62,7 +62,12 @@ class DownloadableMediaMessageProtocolEntity(MediaMessageProtocolEntity):
         return self.cryptKeys and self.mediaKey
 
     def getMediaContent(self):
-        url = "%s" % self.url.decode('ascii')
+        try:
+            url = "%s" % self.url.decode('ascii')
+        except AttributeError as e:
+            print("AttributeError %s" % self.url)
+            url = "%s" % self.url
+            
         try:
             data = urlopen(url).read()
             if self.isEncrypted():

@@ -463,7 +463,7 @@ _DOCUMENTMESSAGE = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='mimeType', full_name='com.whatsapp.proto.DocumentMessage.mimeType', index=1,
+      name='mime_type', full_name='com.whatsapp.proto.DocumentMessage.mime_type', index=1,
       number=2, type=9, cpp_type=9, label=2,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
